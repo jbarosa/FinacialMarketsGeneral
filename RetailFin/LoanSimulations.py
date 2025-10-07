@@ -9,6 +9,8 @@ class LoanSimulations:
         self.notional = notional
 
     def calc_monthly_payment(self):
+        ''' Calculate the monthly payment using the amortization formula '''
+
         monthly_rate = (self.interest_rate + self.spread) / 12 / 100
         num_payments = self.maturity * 12
         if monthly_rate == 0:
@@ -17,6 +19,8 @@ class LoanSimulations:
         return payment
     
     def generate_payment_schedule(self):
+        ''' Generate the payment schedule without early repayments '''
+
         monthly_payment = self.calc_monthly_payment()
         balance = self.notional
         schedule = []
@@ -36,6 +40,8 @@ class LoanSimulations:
         return pd.DataFrame(schedule)
     
     def generate_monthly_early_repayment(self, monthly_early_repayment_amount):
+        ''' Generate the payment schedule with early repayments '''
+
         monthly_payment = self.calc_monthly_payment()
         balance = self.notional
         early_schedule = []
@@ -66,11 +72,13 @@ class LoanSimulations:
         return pd.DataFrame(early_schedule)
     
     def get_time_decrease_by_early_repayment(self, schedule: DataFrame, early_schedule: DataFrame):
+        ''' Calculate the time decrease in months due to early repayments '''
+        
         decrease = len(schedule) - len(early_schedule)
 
         return decrease
 
-    
+
 # Example usage:
 if __name__ == "__main__":
     loan = LoanSimulations(maturity=27, interest_rate=2.0, spread=0.75, notional=162000)
