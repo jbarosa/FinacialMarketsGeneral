@@ -63,11 +63,21 @@ class LoanSimulations:
                 break
         
         return pd.DataFrame(early_schedule)
+    
+    def get_time_decrease_by_early_repayment(self, schedule: DataFrame, early_schedule: DataFrame):
+        decrease = len(schedule) - len(early_schedule)
+        return decrease
+
 
     
 # Example usage:
 if __name__ == "__main__":
     loan = LoanSimulations(maturity=27, interest_rate=2.0, spread=0.75, notional=162000)
     print("Monthly Payment:", loan.calc_monthly_payment())
-    print("Payment Schedule:\n", loan.generate_payment_schedule())
-    print("Early Repayment Schedule:\n", loan.generate_monthly_early_repayment(200))
+    schedule = loan.generate_payment_schedule()
+    print("Payment Schedule:\n", schedule)
+    repayment = 200
+    early_schedule = loan.generate_monthly_early_repayment(repayment)
+    print("Early Repayment Schedule:\n", early_schedule)
+    decrease = loan.get_time_decrease_by_early_repayment(schedule, early_schedule)
+    print(f'Months decrease by paying {repayment}€ monthly: {decrease} (equivelent to {round(decrease/12,2)} years)')
