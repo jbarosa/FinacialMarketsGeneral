@@ -1,4 +1,5 @@
 import pandas as pd
+from pandas import DataFrame
 
 class LoanSimulations:
     def __init__(self, maturity, interest_rate, spread, notional):
@@ -66,8 +67,8 @@ class LoanSimulations:
     
     def get_time_decrease_by_early_repayment(self, schedule: DataFrame, early_schedule: DataFrame):
         decrease = len(schedule) - len(early_schedule)
-        return decrease
 
+        return decrease
 
     
 # Example usage:
